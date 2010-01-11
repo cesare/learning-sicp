@@ -80,3 +80,14 @@
          (make-tree (entry set)
                     (left-branch set)
                     (adjoin-set x (right-branch set))))))
+
+
+;;
+;; Sets and information retrieval
+;;
+
+(define (lookup given-key set-of-records)
+  (cond ((null? set-of-records) #f)
+        ((equal? given-key (key (car set-of-records)))
+         (car set-of-records))
+        (else (lookup given-key (cdr set-of-records)))))
