@@ -48,73 +48,45 @@
 ;;    sub-lists are split into sub-sub-lists, recursively.
 ;;
 ;; for example,
-;;    (partial-tree '(1 2 3 4 5 6 7 8 9 10) 10)
+;;    (partial-tree '(1 3 5 7 9 11) 6)
 ;; => (make-tree 5
-;;               (partial-tree '(1 2 3 4) 4) ;; left sub-tree
-;;               (partial-tree '(6 7 8 9) 4) ;; right sub-tree
+;;               (partial-tree '(1 3) 2)    ;; left sub-list
+;;               (partial-tree '(7 9 11) 3) ;; right sub-list
 ;; => (make-tree 5
-;;               (make-tree 2
-;;                          (partial-tree '(1) 1)
-;;                          (partial-tree '(3 4) 2)
-;;               (make-tree 7
-;;                          (partial-tree '(6) 1)
-;;                          (partial-tree '(8 9) 2))
+;;               (make-tree 1
+;;                          (partial-tree '() 0)
+;;                          (partial-tree '(3) 1))
+;;               (make-tree 9
+;;                          (partial-tree '(7) 1)
+;;                          (partial-tree '(11) 1)))
 ;; => (make-tree 5
-;;               (make-tree 2
-;;                          (make-tree 1
+;;               (make-tree 1
+;;                          '()
+;;                          (make-tree 3
+;;                                     (partial-tree '() 0)
+;;                                     (partial-tree '() 0)))
+;;               (make-tree 9
+;;                          (make-tree 7
 ;;                                     (partial-tree '() 0)
 ;;                                     (partial-tree '() 0))
-;;                          (make-tree 3
+;;                          (make-tree 11
 ;;                                     (partial-tree '() 0)
-;;                                     (partial-tree '(4) 1))
-;;               (make-tree 7
-;;                          (make-tree 6
-;;                                     (partial-tree '() 0)
-;;                                     (partial-tree '() 0))
-;;                          (make-tree 8
-;;                                     (partial-tree '() 0)
-;;                                     (partial-tree '(9) 1))
+;;                                     (partial-tree '() 0)))))
 ;; => (make-tree 5
-;;               (make-tree 2
-;;                          (make-tree 1
-;;                                     '()
-;;                                     '())
+;;               (make-tree 1
+;;                          '()
 ;;                          (make-tree 3
 ;;                                     '()
-;;                                     (make-tree 4
-;;                                                (partial-tree '() 0)
-;;                                                (partial-tree '() 0))
-;;               (make-tree 7
-;;                          (make-tree 6
+;;                                     '()))
+;;               (make-tree 9
+;;                          (make-tree 7
 ;;                                     '()
 ;;                                     '())
-;;                          (make-tree 8
+;;                          (make-tree 11
 ;;                                     '()
-;;                                     (make-tree 9
-;;                                                (partial-tree '() 0)
-;;                                                (partial-tree '() 0))
-;; => (make-tree 5
-;;               (make-tree 2
-;;                          (make-tree 1
-;;                                     '()
-;;                                     '())
-;;                          (make-tree 3
-;;                                     '()
-;;                                     (make-tree 4
-;;                                                '()
-;;                                                '())
-;;               (make-tree 7
-;;                          (make-tree 6
-;;                                     '()
-;;                                     '())
-;;                          (make-tree 8
-;;                                     '()
-;;                                     (make-tree 9
-;;                                                '()
-;;                                                '())
+;;                                     '())))
+;; => '(5 (1 () (3 () ())) (9 (6 () ()) (11 () ())))
 ;;
-;; => '(5 (2 (1 () ()) (3 () (4 () ()))) (8 (6 () (7 () ())) (9 () (10 () ()))))
-
 
 ;;
 ;; b.
