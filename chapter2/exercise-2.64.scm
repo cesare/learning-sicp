@@ -43,9 +43,9 @@
 ;; Q. How it works?
 ;;
 ;; A.
-;; 1) partial-tree splits elts into left sub-tree, a center element, right sub-tree.
-;; 2) make-tree with the center element, left and right sub-trees.
-;;    sub-trees are split into sub-sub-trees, recursively.
+;; 1) partial-tree splits elts into left sub-list, a center element, right sub-list.
+;; 2) make-tree with the center element, left and right sub-lists.
+;;    sub-lists are split into sub-sub-lists, recursively.
 ;;
 ;; for example,
 ;;    (partial-tree '(1 2 3 4 5 6 7 8 9 10) 10)
