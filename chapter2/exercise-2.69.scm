@@ -68,6 +68,7 @@
 (define (generate-huffman-tree pairs)
   (successive-merge (make-leaf-set pairs)))
 
+;; this one is wrong.
 (define (successive-merge leaves)
   (if (= (length leaves) 1)
       (car leaves)
@@ -75,12 +76,20 @@
        (cons (make-code-tree (cadr leaves) (car leaves))
              (cdr (cdr leaves))))))
 
+;; 2nd try.
+(define (successive-merge leaves)
+  (if (= (length leaves) 1)
+      (car leaves)
+      (successive-merge
+       (adjoin-set (make-code-tree (car leaves) (cadr leaves))
+                   (cdr (cdr leaves))))))
+
 ;;
 ;; testing
 ;;
 (use gauche.test)
 (test-start "generate-huffman-tree")
 (test "A4 B2 C1 D1"
-      '((leaf A 4) ((leaf B 2) ((leaf C 1) (leaf D 1) (C D) 2) (B C D) 4) (A B C D) 8)
+      '((leaf A 4) ((leaf B 2) ((leaf D 1) (leaf C 1) (D C) 2) (B D C) 4) (A B D C) 8)
       (lambda () (generate-huffman-tree '((A 4) (B 2) (C 1) (D 1)))))
 (test-end)

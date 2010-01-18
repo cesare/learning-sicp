@@ -98,9 +98,8 @@
   (if (= (length leaves) 1)
       (car leaves)
       (successive-merge
-       (cons (make-code-tree (cadr leaves) (car leaves))
-             (cdr (cdr leaves))))))
-
+       (adjoin-set (make-code-tree (car leaves) (cadr leaves))
+                   (cdr (cdr leaves))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define frequencies
@@ -123,14 +122,14 @@
                  (SHA BOOM)))
 
 (encode (fold-right append () lyrics) frequency-tree)
-;; => (1 1 1 1 0 1 1 1 0 1 1 1 1 1 0 1 1 0 0 0 0 0 0 0 0 0 1 1 1 1 0 1 1 1 0 1 1 1 1 1 0 1 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0 1 1 1 1 1 1 0)
+;; => (1 1 1 1 1 1 1 0 0 1 1 1 1 0 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 1 1 1 1 0 1 1 1 0 0 0 0 0 0 0 0 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1 0 1 1 0 1 1)
 
-(length (encode (fold-right append () lyrics) frequency-tree)) ;; => 87
+(length (encode (fold-right append () lyrics) frequency-tree)) ;; => 84
 
 
 ;;
 ;; Q. How many bits are required for the encoding?
-;; A. 87 bits.
+;; A. 84 bits.
 ;;
 ;; Q. What is the smallest number of bits that would be needed
 ;;    to encode this song if we used a fixed-length code for eight-symbol alphabet?
