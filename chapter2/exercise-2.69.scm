@@ -93,3 +93,17 @@
       '((leaf A 4) ((leaf B 2) ((leaf D 1) (leaf C 1) (D C) 2) (B D C) 4) (A B D C) 8)
       (lambda () (generate-huffman-tree '((A 4) (B 2) (C 1) (D 1)))))
 (test-end)
+
+
+;;
+;;    { (f 5) (e 9) (c 12) (b 13) (d 16) (a 45) }
+;; => { (fe 14) (c 12) (b 13) (d 16) (a 45) } ;; merge (f 5) and (e 9) => (fe 14)
+;; => { (c 12) (b 13) (fe 14) (d 16) (a 45) } ;; sort
+;; => { (cb 25) (fe 14) (d 16) (a 45) }
+;; => { (fe 14) (d 16) (cb 25) (a 45) }
+;; => { (fed 30) (cb 25) (a 45) }
+;; => { (cb 25) (fed 30) (a 45) }
+;; => { (cbfed 55) (a 45) }
+;; => { (a 45) (cbfed 55) }
+;; => { (acbfed 100) }
+;;
