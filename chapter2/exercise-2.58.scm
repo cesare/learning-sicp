@@ -85,7 +85,7 @@
 
 (test-start "sum?")
 (test "(+ 1 2)" #f (lambda () (sum? '(+ 1 2))))
-(test "(1 + 2)" #f (lambda () (sum? '(+ 1 2))))
+(test "(1 + 2)" #t (lambda () (sum? '(1 + 2))))
 (test-end)
 
 (test-start "addend")
