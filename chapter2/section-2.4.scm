@@ -191,3 +191,20 @@
 (define (make-from-mag-ang r a)
   ((get 'make-from-mag-ang 'polar) r a))
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define package (make-hash-table 'equal?))
+
+(define (put op type item)
+  (let ((pkg (if (hash-table-exists? package type)
+                 (hash-table-get package type)
+                 (make-hash-table))))
+    (hash-table-put! pkg op item)
+    (hash-table-put! package type pkg)))
+
+(define (get op type)
+  (let ((pkg (hash-table-get package type)))
+    (hash-table-get pkg op)))
+
