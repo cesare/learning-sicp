@@ -34,7 +34,7 @@
     (let ((g (gcd n d)))
       (cons (/ n g) (/ d g))))
   (define (add-rat x y)
-    (make-rat (- (* (numer x) (denom y))
+    (make-rat (+ (* (numer x) (denom y))
                  (* (numer y) (denom x)))
               (* (denom x) (denom y))))
   (define (sub-rat x y)
@@ -162,6 +162,11 @@
           (apply proc (map contents args))
           (error "No method for these type -- APPLY-GENERIC" (list op type-tags))))))
 
+(define (real-part z) (apply-generic 'real-part z))
+(define (imag-part z) (apply-generic 'imag-part z))
+(define (magnitude z) (apply-generic 'magnitude z))
+(define (angle z) (apply-generic 'angle z))
+
 (define (put op type item)
   (let ((pkg (if (hash-table-exists? package type)
                  (hash-table-get package type)
@@ -180,6 +185,11 @@
   (if (pair? datum)
       (car datum)
       (error "Bad tagged datum -- TYPE-TAG" datum)))
+
+(define (contents datum)
+  (if (pair? datum)
+      (cdr datum)
+      (error "Bad tagged datum -- CONTENTS" datum)))
 
 (define package (make-hash-table 'equal?))
 
